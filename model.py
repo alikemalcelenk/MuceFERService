@@ -1,5 +1,4 @@
 from keras.utils.np_utils import to_categorical
-import numpy as np  # linear algebra
 import os
 import cv2
 import numpy as np

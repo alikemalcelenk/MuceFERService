@@ -1,7 +1,4 @@
 from flask import Flask, request
-from keras.backend import switch
-from keras.utils.generic_utils import default
-import numpy as np  # linear algebra
 import os
 import cv2
 import dlib
