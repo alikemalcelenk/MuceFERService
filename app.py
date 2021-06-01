@@ -1,9 +1,20 @@
 from flask import Flask, request
+from keras.backend import switch
+from keras.utils.generic_utils import default
+import numpy as np  # linear algebra
 import os
 import cv2
 import dlib
+import numpy as np
 
+from keras.models import load_model
 import os
+
+
+# ---------------------------------
+# LOADING MODEL
+
+loadedModal = load_model('main.model')
 
 # ---------------------------------
 # CROPPING IMAGE FUNCTIONS
@@ -63,15 +74,39 @@ def hello_world():
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    image = request.files['image']
-    if not image:
-        return {'message': 'No image uploaded!'}, 404
+    try:
+        image = request.files['image']
+        if not image:
+            return {'message': 'No image uploaded!'}, 404
 
-    image.save(os.path.join("images/", image.filename))
-    inputImg = cv2.imread("./images/" + image.filename)
+        image.save(os.path.join("images/", image.filename))
+        inputImg = cv2.imread("./images/" + image.filename)
 
-    faces(inputImg, image.filename)
-    return {'message': 'successful!'}
+        cropedImg = faces(inputImg, image.filename)
+        cropedImg = np.array([cropedImg])  # to prepare to tensorflow
+        cropedImg = cropedImg/255  # normalization
+
+        predClass = np.argmax(loadedModal.predict(cropedImg), axis=-1)
+        predNumber = predClass[0]
+
+        if (predNumber == 0):
+            return {'index': '0', 'emotion': 'happy'}
+        elif (predNumber == 1):
+            return {'index': '1', 'emotion': 'fear'}
+        elif (predNumber == 2):
+            return {'index': '2', 'emotion': 'surprise'}
+        elif (predNumber == 3):
+            return {'index': '3', 'emotion': 'sadness'}
+        elif (predNumber == 4):
+            return {'index': '4', 'emotion': 'neutral'}
+        elif (predNumber == 5):
+            return {'index': '5', 'emotion': 'anger'}
+        elif (predNumber == 6):
+            return {'index': '6', 'emotion': 'disgust'}
+        else:
+            return {'message': 'There is not exist any true prediction value!'}, 404
+    except:
+        return {'message': 'There is an error occurred! Please try again.'}, 500
 
 
 if __name__ == "__main__":
