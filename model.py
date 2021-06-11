@@ -15,7 +15,7 @@ import os
 
 dataPath = './dataset'
 data_dir_list = os.listdir(dataPath)
-# ['happy', 'fear', 'surprise', 'sadness', 'neutral', 'anger', 'disgust']
+# ['happy', 'sadness', 'neutral', 'anger']
 print(data_dir_list)
 
 imgDataList = []
@@ -31,24 +31,23 @@ for dataset in data_dir_list:
         imgDataList.append(inputImgResize)
 
 imgData = np.array(imgDataList)
+imgData = imgData.astype('float32')
 imgData = imgData/255  # Normalization
 
-num_classes = 7
+num_classes = 4
 
 # 981  #(shape, dtype, order) arr nin içi o yüzden 0 ı alıyoruz. Kaç tane img datası oldugunu gösteriyor
 num_of_samples = imgData.shape[0]
+print(num_of_samples)
 
 # 1lerden olusan 981 elemanlık array olustrudum
 labels = np.ones((num_of_samples), dtype='int64')
 # print(labels)
 
-labels[0:199] = 0  # 200 happy
-labels[200:299] = 1  # 100 fear
-labels[300:399] = 2  # 100 surprise
-labels[400:499] = 3  # 100 sadness
-labels[500:599] = 4  # 100 neutral
-labels[600:699] = 5  # 100 anger
-labels[700:799] = 6  # 100 disgust
+labels[0:420] = 0  # 421 happy
+labels[421:740] = 1  # 320 sadness
+labels[741:1055] = 2  # 315 neutral
+labels[1056:1271] = 3  # 216 anger
 # print(labels)
 
 Y = to_categorical(labels, num_classes)
@@ -70,9 +69,9 @@ x, y = shuffle(imgData, Y, random_state=2)
 
 # Split the dataset
 x_train, x_test, y_train, y_test = train_test_split(
-    x, y, test_size=0.15, random_state=2)
+    x, y, test_size=0.05, random_state=2)
 # Şimdi burada x in bir kısmını test olarak alıcam ve uyg içinde test olarak onu kullanıcam.
-# test_size = datasetimin %85 train %15 validation a ayır demek.
+# test_size = datasetimin %95 train %5 validation a ayır demek.
 # random_state ise yapılan işlemin belli bir sırada yapılmasını sağlıyor.
 
 input_shape = (48, 48, 3)
@@ -103,7 +102,7 @@ model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Flatten())
 model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
-model.add(Dense(7, activation='softmax'))
+model.add(Dense(4, activation='softmax'))
 
 # Adam Optimizer
 # Learning rateimiz normalde  sabittir. Adam Optimizer kullanarak değiştirebiliyoruz.

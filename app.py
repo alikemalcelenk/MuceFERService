@@ -89,17 +89,11 @@ def upload():
         if (predNumber == 0):
             return {'index': '0', 'emotion': 'happy'}
         elif (predNumber == 1):
-            return {'index': '1', 'emotion': 'fear'}
+            return {'index': '1', 'emotion': 'sadness'}
         elif (predNumber == 2):
-            return {'index': '2', 'emotion': 'surprise'}
+            return {'index': '2', 'emotion': 'neutral'}
         elif (predNumber == 3):
-            return {'index': '3', 'emotion': 'sadness'}
-        elif (predNumber == 4):
-            return {'index': '4', 'emotion': 'neutral'}
-        elif (predNumber == 5):
-            return {'index': '5', 'emotion': 'anger'}
-        elif (predNumber == 6):
-            return {'index': '6', 'emotion': 'disgust'}
+            return {'index': '3', 'emotion': 'anger'}
         else:
             return {'message': 'There is not exist any true prediction value!'}, 404
     except:
