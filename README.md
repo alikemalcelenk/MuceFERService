@@ -1,6 +1,6 @@
 # MuceFERService
 
-Muce is my graduation project that suggests music to users by predicting facial emotions using CNN from their images. Emotions that are predicted are happy, neutral, sadness and anger. This repository is code base of facial emotion recognition API service written in Python(Flask) using Flask framework with Keras.
+Muce is my graduation project that suggests music to users by predicting facial emotions using CNN from their images. Emotions that are predicted are happy, neutral, sadness and anger. This repository is code base of facial emotion recognition API service written in Python(Flask) with Keras.
 
 ## Link
 
