@@ -87,7 +87,7 @@ def upload():
         predNumber = predClass[0]
 
         if (predNumber == 0):
-            return {'index': '0', 'emotion': 'happy'}
+            return {'index': '0', 'emotion': 'happiness'}
         elif (predNumber == 1):
             return {'index': '1', 'emotion': 'sadness'}
         elif (predNumber == 2):

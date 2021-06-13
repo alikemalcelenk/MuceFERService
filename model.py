@@ -15,7 +15,7 @@ import os
 
 dataPath = './dataset'
 data_dir_list = os.listdir(dataPath)
-# ['happy', 'sadness', 'neutral', 'anger']
+# ['happiness', 'sadness', 'neutral', 'anger']
 print(data_dir_list)
 
 imgDataList = []
@@ -44,7 +44,7 @@ print(num_of_samples)
 labels = np.ones((num_of_samples), dtype='int64')
 # print(labels)
 
-labels[0:420] = 0  # 421 happy
+labels[0:420] = 0  # 421 happiness
 labels[421:740] = 1  # 320 sadness
 labels[741:1055] = 2  # 315 neutral
 labels[1056:1271] = 3  # 216 anger
